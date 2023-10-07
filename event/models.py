@@ -14,9 +14,11 @@ class Event(iModels.GeneralModel):
     ----------
         - title        -> str:       Title of event.
         - slug         -> slug:      Title slugify of event.
+        - category     -> fk:        Category of event.
         - description  -> text:      Description of event.
         - event_date   -> datetime:  Event date.
         - event_price  -> datetime:  Event price.
+        - organizer    -> fk:        Organization associated with event.
         - created_at   -> datetime:  Created timestamp.
         - updated_at   -> datetime:  Updated timestamp.
 
@@ -29,7 +31,7 @@ class Event(iModels.GeneralModel):
     description = dModels.TextField(_('Description'))
     event_date  = dModels.DateTimeField(_('Date'), auto_now_add=True)
     event_price = dModels.DecimalField(_('Price'), max_digits=5, decimal_places=2)
-    organizer   = dModels.ForeignKey(Organizer, on_delete=dModels.CASCADE, related_name='organizer')
+    organizer   = dModels.ForeignKey(Organizer, on_delete=dModels.CASCADE, related_name='organizers')
 
     class Meta:
         ordering = ('-event_date',)
@@ -43,4 +45,17 @@ class Event(iModels.GeneralModel):
 
 class Category(iModels.TitleSlug):
     """ Model definition of Category. """
+    title = dModels.CharField(_('Title'), max_length=64)
     event = dModels.ForeignKey('Event', on_delete=dModels.CASCADE, verbose_name=_('Category'),)
+
+
+class Tag(iModels.TitleSlug):
+    """ Model definition of Category. """
+    title = dModels.CharField(_('Title'), max_length=64)
+    event = dModels.ForeignKey('Event', on_delete=dModels.CASCADE, verbose_name=_('Event'))
+
+
+class Ticket(dModels.Model):
+    """ Model definition of Ticket. """
+    event = dModels.ForeignKey(Event, on_delete=dModels.CASCADE, related_name='events')
+    # TODO: Add guest attribute here.
