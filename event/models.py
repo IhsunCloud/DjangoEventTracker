@@ -1,6 +1,7 @@
 from django.db import models as dModels
-from painless import models as iModels
 from django.utils.translation import gettext_lazy as _
+
+from painless import models as iModels
 
 
 class Event(iModels.GeneralModel):
@@ -10,13 +11,13 @@ class Event(iModels.GeneralModel):
 
     Arguments:
     ----------
-        - title       -> str:       Title of event.
-        - slug        -> slug:      Title slugify of event.
-        - created_at  -> datetime:  Created timestamp.
-        - updated_at  -> datetime:  Updated timestamp.
-
-        - description -> text:      Description of event.
-        - event_date  -> datetime:  Event date.
+        - title        -> str:       Title of event.
+        - slug         -> slug:      Title slugify of event.
+        - description  -> text:      Description of event.
+        - event_date   -> datetime:  Event date.
+        - event_price  -> datetime:  Event price.
+        - created_at   -> datetime:  Created timestamp.
+        - updated_at   -> datetime:  Updated timestamp.
 
     Methods:
     --------
@@ -26,6 +27,7 @@ class Event(iModels.GeneralModel):
 
     description = dModels.TextField()
     event_date  = dModels.DateTimeField(_('Date'), auto_now_add=True)
+    event_price = dModels.DecimalField(_('Price'), max_digits=5, decimal_places=2)
 
     class Meta:
         ordering = ('-event_date',)
