@@ -19,6 +19,7 @@ class Event(iModels.GeneralModel):
         - event_date   -> datetime:  Event date.
         - event_price  -> datetime:  Event price.
         - organizer    -> fk:        Organization associated with event.
+        - tags         -> fk:        Tag of event.
         - created_at   -> datetime:  Created timestamp.
         - updated_at   -> datetime:  Updated timestamp.
 
@@ -29,7 +30,7 @@ class Event(iModels.GeneralModel):
     """
 
     description = dModels.TextField(_('Description'))
-    event_date  = dModels.DateTimeField(_('Date'), auto_now_add=True)
+    event_date  = dModels.DateTimeField(_('Date'), auto_now_add=False)
     event_price = dModels.DecimalField(_('Price'), max_digits=5, decimal_places=2)
     organizer   = dModels.ForeignKey(Organizer, on_delete=dModels.CASCADE, related_name='organizers')
 
@@ -37,7 +38,7 @@ class Event(iModels.GeneralModel):
         ordering = ('-event_date',)
 
     def __str__(self) -> str:
-        return f'{self.title} {self.created_at}'
+        return f'Title: {self.title} | Date: {self.event_date}'
 
     def __repr__(self) -> str:
         return self.__str__()
