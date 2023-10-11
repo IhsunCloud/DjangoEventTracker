@@ -2,10 +2,13 @@ from django.db import models as dModels
 from django.utils.translation import gettext_lazy as _
 
 from painless import models as iModels
+from cities.models import Ostan, Shahr
 
 
 class Organizer(iModels.GeneralModel):
     """ Model definition of Organizer. """
+    city         = dModels.ForeignKey(Shahr, on_delete=dModels.CASCADE, related_name='organizers')
+    province     = dModels.ForeignKey(Ostan, on_delete=dModels.CASCADE, related_name='organizers')
     date_joined  = dModels.DateTimeField(_('Date Joined'), auto_now_add=True)
     description  = dModels.TextField(_('Organizer Description'))
     email        = dModels.EmailField(_('Email'), max_length=254)
