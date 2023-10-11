@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 from painless import models as iModels
 from organizer.models import Organizer
+from cities.models import Ostan, Shahr
 
 
 class Event(iModels.GeneralModel):
@@ -28,11 +29,12 @@ class Event(iModels.GeneralModel):
         - __str__:  string representation of model.
         - __repr__: string representation of model.
     """
-
     description = dModels.TextField(_('Description'))
+    city        = dModels.ForeignKey(Shahr, on_delete=dModels.CASCADE, related_name='events')
     event_date  = dModels.DateTimeField(_('Date'), auto_now_add=False)
     event_price = dModels.DecimalField(_('Price'), max_digits=5, decimal_places=2)
-    organizer   = dModels.ForeignKey(Organizer, on_delete=dModels.CASCADE, related_name='organizers')
+    organizer   = dModels.ForeignKey(Organizer, on_delete=dModels.CASCADE, related_name='events')
+    province    = dModels.ForeignKey(Ostan, on_delete=dModels.CASCADE, related_name='events')
 
     class Meta:
         ordering = ('-event_date',)
@@ -58,5 +60,5 @@ class Tag(iModels.TitleSlug):
 
 class Ticket(dModels.Model):
     """ Model definition of Ticket. """
-    event = dModels.ForeignKey(Event, on_delete=dModels.CASCADE, related_name='events')
+    event = dModels.ForeignKey(Event, on_delete=dModels.CASCADE, related_name='tickets')
     # TODO: Add guest attribute here.
