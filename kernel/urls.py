@@ -20,3 +20,8 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+
+
+admin.site.site_header = 'Event Tracker for Iranian'
+admin.site.site_title = 'Event Tracker 2'
+admin.site.index_title = 'Event Tracker Index'

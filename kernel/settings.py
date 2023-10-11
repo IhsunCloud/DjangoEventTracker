@@ -40,9 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+# Third-Party Packages.
+
+# Custom Project.
+INSTALLED_APPS.append('cities')
 INSTALLED_APPS.append('event')
 INSTALLED_APPS.append('guest')
 INSTALLED_APPS.append('organizer')
+INSTALLED_APPS.append('painless')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -109,6 +114,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+
+DATETIME_FORMAT = '%d-%m-%Y %H:%M:%S'
 
 TIME_ZONE = 'UTC'
 
