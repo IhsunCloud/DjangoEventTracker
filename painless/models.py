@@ -33,5 +33,3 @@ class TitleSlug(models.Model):
 class GeneralModel(Timestamped, TitleSlug):
     class Meta:
         abstract = True
-        
-        
