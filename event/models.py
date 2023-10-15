@@ -26,15 +26,16 @@ class Event(iModels.GeneralModel):
 
     Methods:
     --------
-        - __str__:  string representation of model.
-        - __repr__: string representation of model.
+        - __str__   -> str: string representation of model.
+        - __repr__  -> str: string representation of model.
     """
     description = dModels.TextField(_('Description'))
+    duration    = dModels.TimeField(_('Duration'))
     city        = dModels.ForeignKey(Shahr, on_delete=dModels.CASCADE, related_name='events')
+    province    = dModels.ForeignKey(Ostan, on_delete=dModels.CASCADE, related_name='events')
     event_date  = dModels.DateTimeField(_('Date'), auto_now_add=False)
     event_price = dModels.DecimalField(_('Price'), max_digits=5, decimal_places=2)
     organizer   = dModels.ForeignKey(Organizer, on_delete=dModels.CASCADE, related_name='events')
-    province    = dModels.ForeignKey(Ostan, on_delete=dModels.CASCADE, related_name='events')
 
     class Meta:
         ordering = ('-event_date',)
@@ -49,13 +50,13 @@ class Event(iModels.GeneralModel):
 class Category(iModels.TitleSlug):
     """ Model definition of Category. """
     title = dModels.CharField(_('Title'), max_length=64)
-    event = dModels.ForeignKey('Event', on_delete=dModels.CASCADE, verbose_name=_('Category'),)
+    event = dModels.ForeignKey('Event', on_delete=dModels.CASCADE, verbose_name=_('Category'), related_name='categories')
 
 
 class Tag(iModels.TitleSlug):
     """ Model definition of Category. """
     title = dModels.CharField(_('Title'), max_length=64)
-    event = dModels.ForeignKey('Event', on_delete=dModels.CASCADE, verbose_name=_('Event'))
+    event = dModels.ForeignKey('Event', on_delete=dModels.CASCADE, verbose_name=_('Event'), related_name='tags')
 
 
 class Ticket(dModels.Model):
